@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Election System</title>
+    <!-- Include Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- AOS CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: url('background.jpg') no-repeat center center fixed;
+            background-size: cover;
+            
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        .background-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3); /* Faded overlay */
+            z-index: -1;
+        }
+        .cover-page {
+            background: rgba(255, 255, 255, 0.9); /* White background with transparency */
+            padding: 60px 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin: 20px;
+        }
+        .cover-page h1, .section h2 {
+            font-family: 'Georgia', serif; /* Update to Georgia font for headers */
+            color: #2c3e50;
+            font-size: 30px;
+        }
+        .cover-page p, .section p {
+            font-family: 'Verdana', sans-serif; /* Update to Verdana font for paragraphs */
+            font-size: 25px;
+            line-height: 1.6;
+        }
+        .btn-custom {
+            font-size: 20px;
+            margin: 10px;
+            padding: 15px 40px;
+            border-radius: 5px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .btn-vote {
+    background: #5e6dee;
+    color: #fff;
+    border: 4px solid #fff; /* Add a white border */
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 100px; /* Adjusted position */
+    right: 100px; /* Positioned to the right */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    font-size: 24px;
+    animation: pulse 2s infinite;
+}
+
+        .btn-helpline {
+            background: #2980b9;
+            color: #fff;
+            border: none;
+        }
+        .btn-helpline:hover {
+            background: #2b82c0;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        @keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        .info-section img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .info-box {
+            transition: background-color 0.3s ease;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            background-color: #ffffff;
+            box-shadow: 0 4px 10px rgba(207, 226, 225, 0.1);
+        }
+        .info-box h2 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        .info-box p {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        .info-box:hover {
+            background-color: #eceff2;
+            color: #333;
+        }
+        .image-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .image-container img {
+            width: 100%;
+            max-width: 500px;
+            border-radius: 10px;
+        }
+        .section {
+            margin: 30px 0;
+        }
+        .section h2 {
+            font-size: 24px;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        .section p {
+            font-size: 18px;
+            line-height: 1.6;
+        }
+        .btn-link {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .btn-link:hover {
+            color: #2980b9;
+        }
+        .footer {
+            background: #2c3e50;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+        .scrolling-message {
+            background: #2980b9;
+            color: white;
+            padding: 4.5px 0; /* Reduced padding to make it thinner */
+            font-size: 16px; /* Reduced font size to make it thinner */
+            position: fixed;
+            width: 100%;
+            top: 15px; /* Adjusted position to bring it down */
+            z-index: 1000;
+            text-align: center;
+            animation: scroll 18s linear infinite;
+        }
+        @keyframes scroll {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Scrolling Message for Recent Updates -->
+    <div class="scrolling-message">
+        Stay updated with the latest election news and updates. The voting deadline is July 31, 2024. Make sure to cast your vote on time!
+    </div>
+
+    <!-- Background Overlay -->
+    <div class="background-overlay"></div>
+    
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Election System</a>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="btn btn-custom btn-vote" href="index.php" title="Vote Now">
+                        <img src="vote_icon_hover.png" alt="Vote Icon" style="width: 90px; height: 90px;">
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <div class="cover-page">
+            <div class="row">
+                <div class="col-md-6">
+                    <h1 style="font-size: 3em;">Welcome to e-Vote: Digital Democracy!</h1>
+                    <p>Your go-to destination for secure and convenient online voting. We're here to make your voting experience smooth and straightforward.</p>
+                    <p>We prioritize the integrity of your vote and the confidentiality of your personal information.</p>
+                </div>
+                <div class="col-md-6 image-container">
+                    <img src="vote.jpg" alt="Election Image">
+                </div>
+            </div>
+            
+            <!-- Portal Overview -->
+            <div class="section">
+                <h2>Portal Overview</h2>
+                <p>e-Vote: Digital Democracy! revolutionizes the way you engage in democratic processes by offering a cutting-edge platform for online voting. Our platform ensures that your voice is heard and your vote is counted with the utmost security. Our advanced technology ensures that your vote is not only counted but also protected by robust security measures. We use state-of-the-art encryption to safeguard your data, ensuring that your voting experience is both private and secure.</p>
+            </div>
+
+            <!-- Important Dates/Deadlines -->
+            <div class="section">
+                <h2>Important Dates/Deadlines</h2>
+                <p>Don’t miss out! The deadline for voting is 31st July, 2024. Make sure to cast your vote before this date to have your say.</p>
+            </div>
+
+            <!-- Key Features -->
+            <div class="section">
+                <h2>Key Features</h2>
+                <div class="row">
+                    <div class="col-md-4 info-box" data-aos="fade-up" data-aos-delay="100">
+                        <h2>Secure Voting</h2>
+                        <p>Rest assured, your votes are encrypted and protected with the highest security standards.</p>
+                    </div>
+                    <div class="col-md-4 info-box" data-aos="fade-up" data-aos-delay="200">
+                        <h2>Real-Time Results</h2>
+                        <p>Track results in real-time and stay updated with live counts.</p>
+                    </div>
+                    <div class="col-md-4 info-box" data-aos="fade-up" data-aos-delay="300">
+                        <h2>User-Friendly Interface</h2>
+                        <p>Enjoy a straightforward and intuitive voting experience.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- User Instructions -->
+            <div class="section">
+                <h2>User Instructions</h2>
+                <p>Getting started is easy! Simply log in to your account, follow the prompts to review your ballot, and cast your vote. For step-by-step instructions, click <a href="instructions.php" class="btn-link">here</a>.</p>
+            </div>
+            <!-- Visual Elements -->
+            <div class="section">
+                <h2>Visual Elements</h2>
+                <p>Vote with confidence, supported by our secure and modern platform.</p>
+                <div class="image-container">
+                    <img src="visual_banner.jpg" alt="Visual Banner">
+                </div>
+            </div>
+            <!-- Contact Information -->
+            <div class="section">
+                <h2>Contact Information</h2>
+                <p>Need help? Our support team is here for you. Contact us at [support email/phone number] or visit our <a href="helpcenter.php" class="btn-link">Help Center</a> for assistance.</p>
+            </div>
+            
+            <!-- Security Information -->
+            <div class="section">
+                <h2>Security Information</h2>
+                <p>Your privacy and security are our top priorities. We use advanced encryption and secure protocols to ensure your data is safe and your vote is confidential.</p>
+            </div>
+            
+            <!-- Legal Information -->
+            <div class="section">
+                <h2>Legal Information</h2>
+                <p>By using this portal, you agree to our <a href="terms.php" class="btn-link">Terms of Service</a> and <a href="privacypolicy.php" class="btn-link">Privacy Policy</a>. Please review these documents to understand your rights and responsibilities.</p>
+            </div>
+            
+            <!-- Feedback/Survey Link -->
+            <div class="section">
+                <h2>Feedback/Survey</h2>
+                <p>We value your input! Share your experience and suggestions through our <a href="feedback.php" class="btn-link">Feedback Survey</a>. Your feedback helps us improve our services.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS, Popper.js, and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- AOS JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        AOS.init();
+        </script>
+
+
+     <!-- Footer -->
+     <footer class="footer">
+        <p>&copy; <script>document.write(new Date().getFullYear());</script> Election System. All rights reserved.</p>
+    </footer>
+</body>
+</html>
